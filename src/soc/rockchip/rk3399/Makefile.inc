@@ -21,6 +21,7 @@ bootblock-y += timer.c
 bootblock-y += ../common/spi.c
 bootblock-y += clock.c
 bootblock-y += mmu_operations.c
+bootblock-y += i2c.c
 ifeq ($(CONFIG_BOOTBLOCK_CONSOLE),y)
 bootblock-$(CONFIG_DRIVERS_UART) += ../common/uart.c
 endif
@@ -30,6 +31,7 @@ verstage-y += ../common/cbmem.c
 verstage-y += timer.c
 verstage-y += ../common/spi.c
 verstage-y += clock.c
+verstage-y += i2c.c
 
 ################################################################################
 
@@ -39,6 +41,7 @@ romstage-y += timer.c
 romstage-y += ../common/spi.c
 romstage-y += clock.c
 romstage-y += mmu_operations.c
+romstage-y += i2c.c
 ################################################################################
 
 ramstage-y += ../common/cbmem.c
@@ -47,6 +50,7 @@ ramstage-$(CONFIG_DRIVERS_UART) += ../common/uart.c
 ramstage-y += timer.c
 ramstage-y += ../common/spi.c
 ramstage-y += clock.c
+ramstage-y += i2c.c
 
 ################################################################################
 
