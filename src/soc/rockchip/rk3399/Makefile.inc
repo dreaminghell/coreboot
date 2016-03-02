@@ -21,6 +21,7 @@ bootblock-y += timer.c
 bootblock-y += spi.c
 bootblock-y += clock.c
 bootblock-y += mmu_operations.c
+bootblock-y += i2c.c
 ifeq ($(CONFIG_BOOTBLOCK_CONSOLE),y)
 bootblock-$(CONFIG_DRIVERS_UART) += uart.c
 endif
@@ -30,6 +31,7 @@ verstage-y += cbmem.c
 verstage-y += timer.c
 verstage-y += spi.c
 verstage-y += clock.c
+verstage-y += i2c.c
 
 ################################################################################
 
@@ -39,6 +41,7 @@ romstage-y += timer.c
 romstage-y += spi.c
 romstage-y += clock.c
 romstage-y += mmu_operations.c
+romstage-y += i2c.c
 ################################################################################
 
 ramstage-y += cbmem.c
@@ -47,6 +50,7 @@ ramstage-$(CONFIG_DRIVERS_UART) += uart.c
 ramstage-y += timer.c
 ramstage-y += spi.c
 ramstage-y += clock.c
+ramstage-y += i2c.c
 
 ################################################################################
 
