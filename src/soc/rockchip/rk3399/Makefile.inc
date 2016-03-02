@@ -23,6 +23,7 @@ bootblock-$(CONFIG_DRIVERS_UART) += ../common/uart.c
 endif
 bootblock-y += bootblock.c
 bootblock-y += clock.c
+bootblock-y += ../common/i2c.c
 bootblock-y += mmu_operations.c
 bootblock-y += timer.c
 
@@ -30,6 +31,7 @@ verstage-y += ../common/cbmem.c
 verstage-y += ../common/spi.c
 verstage-$(CONFIG_DRIVERS_UART) += ../common/uart.c
 verstage-y += clock.c
+verstage-y += ../common/i2c.c
 verstage-y += timer.c
 
 ################################################################################
@@ -38,7 +40,8 @@ romstage-y += ../common/cbmem.c
 romstage-y += ../common/spi.c
 romstage-$(CONFIG_DRIVERS_UART) += ../common/uart.c
 romstage-y += clock.c
-bootblock-y += mmu_operations.c
+romstage-y += ../common/i2c.c
+romstage-y += mmu_operations.c
 romstage-y += timer.c
 
 ################################################################################
@@ -47,6 +50,7 @@ ramstage-y += ../common/cbmem.c
 ramstage-y += ../common/spi.c
 ramstage-$(CONFIG_DRIVERS_UART) += ../common/uart.c
 ramstage-y += clock.c
+ramstage-y += ../common/i2c.c
 ramstage-y += soc.c
 ramstage-y += timer.c
 

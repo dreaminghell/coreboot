@@ -100,11 +100,12 @@ enum apll_l_frequencies {
 };
 
 void rkclk_configure_spi(unsigned int bus, unsigned int hz);
-void rkclk_configure_i2c(unsigned int bus, unsigned int hz);
 void rkclk_configure_tsadc(unsigned int hz);
 void rkclk_configure_emmc(void);
 void rkclk_init(void);
 void rkclk_configure_ddr(unsigned int hz);
 void rkclk_ddr_reset(u32 ch, u32 ctl, u32 phy);
 void rkclk_configure_cpu(enum apll_l_frequencies apll_l_freq);
+unsigned rkclk_i2c_clock_for_bus(unsigned bus);
+
 #endif	/* __SOC_ROCKCHIP_RK3399_CLOCK_H__ */

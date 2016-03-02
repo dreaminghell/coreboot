@@ -20,6 +20,7 @@
 #include <soc/addressmap.h>
 #include <soc/clock.h>
 #include <soc/grf.h>
+#include <soc/i2c.h>
 #include <soc/soc.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -491,7 +492,7 @@ void rkclk_configure_spi(unsigned int bus, unsigned int hz)
 	}
 }
 
-void rkclk_configure_i2c(unsigned int bus, unsigned int hz)
+static void rkclk_configure_i2c(unsigned int bus, unsigned int hz)
 {
 	int src_clk_div;
 
@@ -565,6 +566,14 @@ void rkclk_configure_i2c(unsigned int bus, unsigned int hz)
 	default:
 		printk(BIOS_ERR, "do not support this i2c bus\n");
 	}
+}
+
+unsigned rkclk_i2c_clock_for_bus(unsigned bus)
+{
+	unsigned freq = 198 * 1000 * 1000;
+	rkclk_configure_i2c(bus, freq);
+
+	return freq;
 }
 
 void rkclk_configure_tsadc(unsigned int hz)
