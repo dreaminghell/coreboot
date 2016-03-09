@@ -23,4 +23,7 @@
 #define RK_SETBITS(set) RK_CLRSETBITS(0, set)
 #define RK_CLRBITS(clr) RK_CLRSETBITS(clr, 0)
 
+#define rk_clrsetreg(addr, clr, set)   write32(addr, (clr) << 16 | (set))
+#define rk_clrreg(addr, clr)           write32(addr, (clr) << 16)
+
 #endif  /* ! __COREBOOT_SRC_SOC_ROCKCHIP_COMMON_INCLUDE_SOC_SOC_H */
