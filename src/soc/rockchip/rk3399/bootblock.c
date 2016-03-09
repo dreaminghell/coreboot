@@ -19,7 +19,9 @@
 #include <bootblock_common.h>
 #include <console/console.h>
 #include <symbols.h>
+#include <soc/clock.h>
 
 void bootblock_soc_init(void)
 {
+	rkclk_init();
 }
