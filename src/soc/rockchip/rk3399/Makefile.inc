@@ -24,6 +24,8 @@ bootblock-y += mmu_operations.c
 bootblock-y += i2c.c
 bootblock-y += gpio.c
 bootblock-y += pwm.c
+bootblock-y += tsadc.c
+bootblock-$(CONFIG_EVB_MODE) += ../common/rk808.c
 ifeq ($(CONFIG_BOOTBLOCK_CONSOLE),y)
 bootblock-$(CONFIG_DRIVERS_UART) += ../common/uart.c
 endif
@@ -59,7 +61,10 @@ ramstage-y += clock.c
 ramstage-y += i2c.c
 ramstage-y += gpio.c
 ramstage-y += pwm.c
+ramstage-y += saradc.c
 ramstage-y += sdram.c
+
+BL31_MAKEARGS += PLAT=rk3399
 ################################################################################
 
 CPPFLAGS_common += -Isrc/soc/rockchip/rk3399/include
