@@ -18,6 +18,7 @@ ifeq ($(CONFIG_SOC_ROCKCHIP_RK3399),y)
 IDBTOOL = util/rockchip/make_idb.py
 
 bootblock-y += ../common/spi.c
+bootblock-$(CONFIG_EVB_MODE) += ../common/rk808.c
 ifeq ($(CONFIG_BOOTBLOCK_CONSOLE),y)
 bootblock-$(CONFIG_DRIVERS_UART) += ../common/uart.c
 endif
@@ -60,10 +61,12 @@ ramstage-y += clock.c
 ramstage-y += gpio.c
 ramstage-y += ../common/i2c.c
 ramstage-y += ../common/pwm.c
-romstage-y += sdram.c
+ramstage-y += saradc.c
+ramstage-y += sdram.c
 ramstage-y += soc.c
 ramstage-y += timer.c
 
+BL31_MAKEARGS += PLAT=rk3399
 ################################################################################
 
 CPPFLAGS_common += -Isrc/soc/rockchip/rk3399/include
