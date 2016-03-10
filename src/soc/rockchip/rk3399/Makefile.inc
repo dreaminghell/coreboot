@@ -59,6 +59,8 @@ ramstage-y += clock.c
 ramstage-y += i2c.c
 ramstage-y += gpio.c
 ramstage-y += pwm.c
+
+BL31_MAKEARGS += PLAT=rk3399
 ################################################################################
 
 CPPFLAGS_common += -Isrc/soc/rockchip/rk3399/include
