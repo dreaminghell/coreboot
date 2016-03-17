@@ -26,6 +26,7 @@
 #include <romstage_handoff.h>
 #include <symbols.h>
 #include <soc/mmu_operations.h>
+#include <soc/sdram.h>
 
 static const uint64_t dram_size = (uint64_t)CONFIG_DRAM_SIZE_MB * MiB;
 
@@ -35,7 +36,7 @@ void main(void)
 	exception_init();
 
 	/*TODO: need implement sdram init */
-
+	sdram_init(get_sdram_config());
 	mmu_config_range((void *)0, (uintptr_t)dram_size, CACHED_MEM);
 	mmu_config_range(_dma_coherent, _dma_coherent_size, UNCACHED_MEM);
 	cbmem_initialize_empty();

@@ -29,6 +29,7 @@ romstage-y += romstage.c
 romstage-y += memlayout.ld
 romstage-y += boardid.c
 romstage-y += reset.c
+romstage-y += sdram_configs.c
 
 ramstage-y += mainboard.c
 ramstage-y += chromeos.c

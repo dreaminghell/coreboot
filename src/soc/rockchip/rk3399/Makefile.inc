@@ -47,6 +47,7 @@ romstage-y += mmu_operations.c
 romstage-y += i2c.c
 romstage-y += gpio.c
 romstage-y += pwm.c
+romstage-y += sdram.c
 ################################################################################
 
 ramstage-y += ../common/cbmem.c
@@ -58,6 +59,7 @@ ramstage-y += clock.c
 ramstage-y += i2c.c
 ramstage-y += gpio.c
 ramstage-y += pwm.c
+ramstage-y += sdram.c
 ################################################################################
 
 CPPFLAGS_common += -Isrc/soc/rockchip/rk3399/include
