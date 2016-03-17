@@ -48,6 +48,7 @@ romstage-y += gpio.c
 romstage-y += ../common/i2c.c
 romstage-y += mmu_operations.c
 romstage-y += ../common/pwm.c
+romstage-y += sdram.c
 romstage-y += timer.c
 
 ################################################################################
@@ -59,6 +60,7 @@ ramstage-y += clock.c
 ramstage-y += gpio.c
 ramstage-y += ../common/i2c.c
 ramstage-y += ../common/pwm.c
+romstage-y += sdram.c
 ramstage-y += soc.c
 ramstage-y += timer.c
 
