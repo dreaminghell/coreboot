@@ -47,6 +47,7 @@ romstage-y += mmu_operations.c
 romstage-y += i2c.c
 romstage-y += gpio.c
 romstage-y += pwm.c
+romstage-y += sdram.c
 ################################################################################
 
 ramstage-y += cbmem.c
