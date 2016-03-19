@@ -14,12 +14,23 @@
  *
  */
 
+#include <arch/io.h>
+#include <arch/mmu.h>
 #include <bootblock_common.h>
+#include <console/console.h>
 #include <soc/mmu_operations.h>
-#include <soc/clock.h>
+#include <symbols.h>
 
-void bootblock_soc_init(void)
+void rockchip_mmu_init(void)
 {
-	rkclk_init();
-	rockchip_mmu_init();
+	mmu_init();
+
+	/* Set 0x0 to end of dram as device memory */
+	mmu_config_range((void *)0, (uintptr_t)8192 * MiB, DEV_MEM);
+
+	mmu_config_range(_sram, _sram_size, SECURE_MEM);
+
+	/* set ttb as secure */
+	mmu_config_range(_ttb, _ttb_size, SECURE_MEM);
+	mmu_enable();
 }

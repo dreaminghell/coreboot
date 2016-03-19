@@ -14,12 +14,17 @@
  *
  */
 
-#include <bootblock_common.h>
-#include <soc/mmu_operations.h>
-#include <soc/clock.h>
+#ifndef __SOC_ROCKCHIP_RK3399_MMU_H__
+#define __SOC_ROCKCHIP_RK3399_MMU_H__
 
-void bootblock_soc_init(void)
-{
-	rkclk_init();
-	rockchip_mmu_init();
-}
+#include <arch/mmu.h>
+
+enum {
+	DEV_MEM		= MA_DEV | MA_S | MA_RW,
+	CACHED_MEM	= MA_MEM | MA_NS | MA_RW,
+	SECURE_MEM	= MA_MEM | MA_S  | MA_RW,
+	UNCACHED_MEM	= MA_MEM | MA_NS | MA_RW | MA_MEM_NC,
+};
+
+void rockchip_mmu_init(void);
+#endif
