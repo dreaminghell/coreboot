@@ -20,6 +20,7 @@ bootblock-y += bootblock.c
 bootblock-y += timer.c
 bootblock-y += ../common/spi.c
 bootblock-y += clock.c
+bootblock-y += mmu_operations.c
 ifeq ($(CONFIG_BOOTBLOCK_CONSOLE),y)
 bootblock-$(CONFIG_DRIVERS_UART) += ../common/uart.c
 endif
@@ -37,7 +38,7 @@ romstage-y += ../common/cbmem.c
 romstage-y += timer.c
 romstage-y += ../common/spi.c
 romstage-y += clock.c
-
+romstage-y += mmu_operations.c
 ################################################################################
 
 ramstage-y += ../common/cbmem.c
