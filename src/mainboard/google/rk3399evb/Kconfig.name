@@ -1,0 +1,2 @@
+config BOARD_GOOGLE_RK3399EVB
+	bool "Rk3399evb"

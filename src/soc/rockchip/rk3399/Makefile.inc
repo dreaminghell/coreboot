@@ -25,7 +25,7 @@ bootblock-y += i2c.c
 bootblock-y += gpio.c
 bootblock-y += pwm.c
 bootblock-y += tsadc.c
-bootblock-$(CONFIG_EVB_MODE) += ../common/rk808.c
+bootblock-y += ../common/rk808.c
 ifeq ($(CONFIG_BOOTBLOCK_CONSOLE),y)
 bootblock-$(CONFIG_DRIVERS_UART) += ../common/uart.c
 endif
