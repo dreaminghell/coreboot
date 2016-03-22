@@ -24,6 +24,7 @@ bootblock-y += mmu_operations.c
 bootblock-y += i2c.c
 bootblock-y += gpio.c
 bootblock-y += pwm.c
+bootblock-y += tsadc.c
 ifeq ($(CONFIG_BOOTBLOCK_CONSOLE),y)
 bootblock-$(CONFIG_DRIVERS_UART) += uart.c
 endif
