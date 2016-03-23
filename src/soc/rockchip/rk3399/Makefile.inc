@@ -26,6 +26,7 @@ bootblock-y += clock.c
 bootblock-y += gpio.c
 bootblock-y += ../common/i2c.c
 bootblock-y += mmu_operations.c
+bootblock-y += ../common/pwm.c
 bootblock-y += timer.c
 
 verstage-y += ../common/cbmem.c
@@ -34,6 +35,7 @@ verstage-$(CONFIG_DRIVERS_UART) += ../common/uart.c
 verstage-y += clock.c
 verstage-y += gpio.c
 verstage-y += ../common/i2c.c
+verstage-y += ../common/pwm.c
 verstage-y += timer.c
 
 ################################################################################
@@ -45,6 +47,7 @@ romstage-y += clock.c
 romstage-y += gpio.c
 romstage-y += ../common/i2c.c
 romstage-y += mmu_operations.c
+romstage-y += ../common/pwm.c
 romstage-y += timer.c
 
 ################################################################################
@@ -55,6 +58,7 @@ ramstage-$(CONFIG_DRIVERS_UART) += ../common/uart.c
 ramstage-y += clock.c
 ramstage-y += gpio.c
 ramstage-y += ../common/i2c.c
+ramstage-y += ../common/pwm.c
 ramstage-y += soc.c
 ramstage-y += timer.c
 
