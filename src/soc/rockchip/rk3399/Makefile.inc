@@ -23,6 +23,7 @@ bootblock-y += clock.c
 bootblock-y += mmu_operations.c
 bootblock-y += i2c.c
 bootblock-y += gpio.c
+bootblock-y += pwm.c
 ifeq ($(CONFIG_BOOTBLOCK_CONSOLE),y)
 bootblock-$(CONFIG_DRIVERS_UART) += uart.c
 endif
@@ -34,7 +35,7 @@ verstage-y += spi.c
 verstage-y += clock.c
 verstage-y += i2c.c
 verstage-y += gpio.c
-
+verstage-y += pwm.c
 ################################################################################
 
 romstage-$(CONFIG_DRIVERS_UART) += uart.c
@@ -45,7 +46,7 @@ romstage-y += clock.c
 romstage-y += mmu_operations.c
 romstage-y += i2c.c
 romstage-y += gpio.c
-
+romstage-y += pwm.c
 ################################################################################
 
 ramstage-y += cbmem.c
@@ -56,7 +57,7 @@ ramstage-y += spi.c
 ramstage-y += clock.c
 ramstage-y += i2c.c
 ramstage-y += gpio.c
-
+ramstage-y += pwm.c
 ################################################################################
 
 CPPFLAGS_common += -Isrc/soc/rockchip/rk3399/include

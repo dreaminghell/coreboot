@@ -56,4 +56,5 @@
 
 #define TSADC_BASE		0xff260000
 #define SARADC_BASE		0xff100000
+#define PWM_BASE		0xff420000
 #endif /* __SOC_ROCKCHIP_RK3399_ADDRESSMAP_H__ */
