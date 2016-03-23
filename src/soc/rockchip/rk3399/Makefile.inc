@@ -60,6 +60,7 @@ ramstage-y += clock.c
 ramstage-y += i2c.c
 ramstage-y += gpio.c
 ramstage-y += pwm.c
+ramstage-y += saradc.c
 
 BL31_MAKEARGS += PLAT=rk3399
 ################################################################################
