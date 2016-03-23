@@ -170,6 +170,10 @@ enum {
 	HCLK_PERILP1_DIV_CON_MASK	= 0x1f,
 	HCLK_PERILP1_DIV_CON_SHIFT	= 0,
 
+	/* CLKSEL_CON26 */
+	CLK_SARADC_DIV_CON_MASK		= 0xff,
+	CLK_SARADC_DIV_CON_SHIFT	= 8,
+
 	/* CLKSEL_CON27 */
 	CLK_TSADC_SEL_MASK		= 1,
 	CLK_TSADC_SEL_SHIFT		= 15,
@@ -620,4 +624,17 @@ void rkclk_configure_emmc(void)
                      CLK_EMMC_DIV_CON_MASK << CLK_EMMC_DIV_CON_SHIFT,
                      CLK_EMMC_PLL_SEL_GPLL << CLK_EMMC_PLL_SHIFT |
                      (src_clk_div - 1) << CLK_EMMC_DIV_CON_SHIFT);
+}
+
+void rkclk_configure_saradc(unsigned int hz)
+{
+	int src_clk_div;
+
+	/* saradc src clk form 24MHz */
+	src_clk_div = 24 * MHz / hz;
+	assert((src_clk_div - 1 < 255) && (src_clk_div * hz == 24 * MHz));
+
+	rk_clrsetreg(&cru_ptr->clksel_con[26],
+		     CLK_SARADC_DIV_CON_MASK << CLK_SARADC_DIV_CON_SHIFT,
+		     src_clk_div << CLK_SARADC_DIV_CON_SHIFT);
 }
