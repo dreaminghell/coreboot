@@ -20,6 +20,11 @@
 #include <soc/grf.h>
 #include <soc/spi.h>
 #include <console/console.h>
+#include <delay.h>
+#include <soc/clock.h>
+#include <soc/i2c.h>
+#include <soc/rk808.h>
+#include <soc/tsadc.h>
 
 void bootblock_mainboard_early_init(void)
 {
@@ -34,7 +39,23 @@ void bootblock_mainboard_early_init(void)
 
 void bootblock_mainboard_init(void)
 {
+#if CONFIG_EVB_MODE
+	/* Up VDD_CPU (BUCK2) to 1.4V to support max CPU frequency (1.6GHz). */
+	write32(&rk3399_pmugrf->iomux_i2c0_scl, IOMUX_I2C0_SCL);
+	write32(&rk3399_pmugrf->iomux_i2c0_sda, IOMUX_I2C0_SDA);
+	i2c_init(CONFIG_PMIC_BUS, 400*KHz);
+
+	rk808_configure_buck(2, 1100);
+	udelay(100);/* Must wait for voltage to stabilize,2mV/us */
+	rkclk_configure_cpu(APLL_L_1600_MHZ);
+	write32(&rk3399_grf->iomux_spi2, IOMUX_SPI2);
+
+	/* enable tsadc */
+	write32(&rk3399_pmugrf->tsadc_int, IOMUX_TSADC_INT);
+	tsadc_init();
+#else
 	write32(&rk3399_pmugrf->spi1_rxd, IOMUX_SPI1_RX);
 	write32(&rk3399_pmugrf->spi1_csclktx, IOMUX_SPI1_CSCLKTX);
+#endif
 	rockchip_spi_init(CONFIG_BOOT_MEDIA_SPI_BUS, 24750*KHz);
 }
