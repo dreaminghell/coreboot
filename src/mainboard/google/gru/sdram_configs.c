@@ -25,7 +25,7 @@
 #include <types.h>
 
 static struct rk3399_sdram_params sdram_configs[] = {
-#include "sdram_inf/sdram-ddr3-NT5CB256M16DP-2GB.inc"
+#include "sdram_inf/sdram-lpddr3-hynix-4GB.inc"
 };
 
 const struct rk3399_sdram_params *get_sdram_config()
