@@ -36,17 +36,33 @@ config MAINBOARD_DIR
 	string
 	default google/kevin
 
+if EVB_MODE
 config MAINBOARD_PART_NUMBER
 	string
-	default "kevin"
-
-config MAINBOARD_VENDOR
-	string
-	default "Google"
+	default "rk3399evb"
 
 config DRAM_SIZE_MB
 	int
 	default 2048
+
+config PMIC_BUS
+        int
+        default 0
+endif
+
+if !EVB_MODE
+config MAINBOARD_PART_NUMBER
+	string
+	default "kevin"
+
+config DRAM_SIZE_MB
+	int
+	default 4096
+endif
+
+config MAINBOARD_VENDOR
+	string
+	default "Google"
 
 config EC_GOOGLE_CHROMEEC_SPI_BUS
 	hex
@@ -60,5 +76,9 @@ config CONSOLE_SERIAL_UART_ADDRESS
 	hex
 	depends on DRIVERS_UART
 	default 0xFF1A0000
+
+config EVB_MODE
+       bool "Build image for EVB"
+       default n
 
 endif # BOARD_GOOGLE_KEVIN
