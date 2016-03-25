@@ -103,6 +103,7 @@ void rkclk_configure_spi(unsigned int bus, unsigned int hz);
 void rkclk_configure_i2c(unsigned int bus, unsigned int hz);
 void rkclk_configure_tsadc(unsigned int hz);
 void rkclk_configure_saradc(unsigned int hz);
+void rkclk_configure_crypto(unsigned int hz);
 void rkclk_configure_emmc(void);
 void rkclk_init(void);
 void rkclk_configure_ddr(unsigned int hz);
