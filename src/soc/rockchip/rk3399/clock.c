@@ -145,6 +145,13 @@ enum {
 	ACLK_PERILP0_DIV_CON_MASK	= 0x1f,
 	ACLK_PERILP0_DIV_CON_SHIFT	= 0,
 
+	/* CLKSET_CON24 */
+	CLK_CRYPTO0_PLL_SEL_MASK	= 1,
+	CLK_CRYPTO0_PLL_SEL_GPLL	= 1,
+	CLK_CRYPTO0_PLL_SEL_SHIFT	= 6,
+	CLK_CRYPTO0_PLL_DIV_CON_MASK	= 0x1f,
+	CLK_CRYPTO0_PLL_DIV_CON_SHIFT	= 0,
+
 	/* CLKSEL_CON25 */
 	PCLK_PERILP1_DIV_CON_MASK	= 0x7,
 	PCLK_PERILP1_DIV_CON_SHIFT	= 8,
@@ -677,6 +684,19 @@ void rkclk_configure_saradc(unsigned int hz)
 		RK_CLRSETBITS(CLK_SARADC_DIV_CON_MASK <<
 						CLK_SARADC_DIV_CON_SHIFT,
 			      (src_clk_div - 1) << CLK_SARADC_DIV_CON_SHIFT));
+}
+
+void rkclk_configure_crypto(unsigned int hz)
+{
+	u32 div = GPLL_HZ / hz;
+
+	assert((div - 1 < 0x1f) && (div * hz == GPLL_HZ));
+	assert(hz <= 150*MHz);  /* Suggested max in TRM. */
+	write32(&cru_ptr->clksel_con[24], RK_CLRSETBITS
+		(CLK_CRYPTO0_PLL_SEL_MASK << CLK_CRYPTO0_PLL_SEL_SHIFT |
+		 CLK_CRYPTO0_PLL_DIV_CON_MASK << CLK_CRYPTO0_PLL_DIV_CON_SHIFT,
+		 CLK_CRYPTO0_PLL_SEL_GPLL << CLK_CRYPTO0_PLL_SEL_SHIFT |
+		 div << CLK_CRYPTO0_PLL_DIV_CON_SHIFT));
 }
 
 void rkclk_configure_vop_aclk(u32 vop_id, u32 aclk_hz)
