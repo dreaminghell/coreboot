@@ -39,10 +39,16 @@ static void configure_emmc(void)
 	rkclk_configure_emmc();
 }
 
+static void configure_usb(void)
+{
+	gpio_output(GPIO(4, D, 1), 1); /* vbus_drv_en */
+}
+
 static void mainboard_init(device_t dev)
 {
 	configure_sdmmc();
 	configure_emmc();
+	configure_usb();
 }
 
 static void mainboard_enable(device_t dev)
