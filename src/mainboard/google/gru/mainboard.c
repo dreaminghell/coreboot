@@ -21,8 +21,16 @@
 #include <device/device.h>
 #include <console/console.h>
 
+static void configure_usb(void)
+{
+#if CONFIG_EVB_MODE
+	gpio_output(GPIO(4, D, 1), 1); /* vbus_drv_en */
+#endif
+}
+
 static void mainboard_init(device_t dev)
 {
+	configure_usb();
 }
 
 static void mainboard_enable(device_t dev)
