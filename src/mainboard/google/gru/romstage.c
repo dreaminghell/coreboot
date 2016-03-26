@@ -28,7 +28,8 @@
 #include <soc/mmu_operations.h>
 #include <soc/sdram.h>
 
-static const uint64_t dram_size = (uint64_t)CONFIG_DRAM_SIZE_MB * MiB;
+static const uint64_t dram_size =
+	(uint64_t)min((uint64_t)CONFIG_DRAM_SIZE_MB * MiB, 0xf8000000);
 
 void main(void)
 {
