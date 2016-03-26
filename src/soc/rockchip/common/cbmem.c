@@ -14,11 +14,14 @@
  */
 
 #include <cbmem.h>
-#include <stddef.h>
-#include <symbols.h>
 #include <soc/sdram.h>
+#include <stddef.h>
+#include <stdlib.h>
+#include <symbols.h>
 
 void *cbmem_top(void)
 {
-	return _dram + sdram_size_mb()*MiB;
+	return (void *)min((uintptr_t)_dram +
+			   sdram_size_mb() * MiB,
+			   0xf8000000);
 }
