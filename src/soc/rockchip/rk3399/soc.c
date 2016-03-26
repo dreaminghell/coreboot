@@ -24,7 +24,7 @@
 static void soc_read_resources(device_t dev)
 {
 	ram_resource(dev, 0, (uintptr_t)_dram / KiB,
-		     CONFIG_DRAM_SIZE_MB * KiB);
+		     min(CONFIG_DRAM_SIZE_MB * KiB, 0xf8000000 / KiB));
 }
 
 static void soc_init(device_t dev)

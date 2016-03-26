@@ -15,10 +15,12 @@
 
 #include <cbmem.h>
 #include <stddef.h>
+#include <stdlib.h>
 #include <symbols.h>
 
 void *cbmem_top(void)
 {
-	return (void *)((uintptr_t) _dram +
-			((uintptr_t)CONFIG_DRAM_SIZE_MB << 20));
+	return (void *)min((uintptr_t)_dram +
+			   ((uintptr_t)CONFIG_DRAM_SIZE_MB << 20),
+			   0xf8000000);
 }
