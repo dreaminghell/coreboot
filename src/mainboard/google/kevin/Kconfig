@@ -57,7 +57,7 @@ config MAINBOARD_PART_NUMBER
 
 config DRAM_SIZE_MB
 	int
-	default 4096
+	default 2048
 endif
 
 config MAINBOARD_VENDOR
