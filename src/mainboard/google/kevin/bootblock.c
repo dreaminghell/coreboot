@@ -28,6 +28,9 @@
 
 void bootblock_mainboard_early_init(void)
 {
+	/* select gpio2 voltage 1.8V */
+	write32(&rk3399_grf->io_sel, RK_SETBITS(1 << 0));
+
 	if (IS_ENABLED(CONFIG_DRIVERS_UART)) {
 		assert(CONFIG_CONSOLE_SERIAL_UART_ADDRESS == UART2_BASE);
 		write32(&rk3399_grf->iomux_uart2c, IOMUX_UART2C);
