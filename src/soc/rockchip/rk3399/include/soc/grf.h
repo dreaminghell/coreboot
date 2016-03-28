@@ -167,7 +167,8 @@ struct rk3399_grf_regs {
 	u32 ddrc0_con1;
 	u32 ddrc1_con0;
 	u32 ddrc1_con1;
-	u32 reserved28[0xad];
+	u32 reserved28[0xac];
+	u32 io_sel;
 	u32 saradc_testbit;
 	u32 tsadc_testbit_l;
 	u32 tsadc_testbit_h;
