@@ -30,9 +30,10 @@ static void configure_sdmmc(void)
 	gpio_output(GPIO(0, A, 1), 1);	/* SDMMC_PWR_EN */
 	gpio_input(GPIO(0, A, 7));	/* SDMMC_DET_L */
 #else
-	gpio_output(GPIO(2, A, 2), 1);	/* SDMMC_PWR_EN */
+	gpio_output(GPIO(2, D, 4), 1);	/* SDMMC_PWR_EN */
+	gpio_output(GPIO(2, A, 2), 1);	/* SDMMC_SDIO_PWR_EN */
 	gpio_input(GPIO(4, D, 2));	/* SDMMC_DET_L */
-	gpio_output(GPIO(2, D, 4), 1);	/* Keep the max voltage */
+	gpio_output(GPIO(2, D, 4), 0);	/* Keep the max voltage */
 #endif
 	write32(&rk3399_grf->iomux_sdmmc, IOMUX_SDMMC);
 }
