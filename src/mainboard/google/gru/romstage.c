@@ -24,19 +24,37 @@
 #include <delay.h>
 #include <program_loading.h>
 #include <romstage_handoff.h>
-#include <symbols.h>
+#include <soc/grf.h>
 #include <soc/mmu_operations.h>
+#include <soc/pwm.h>
 #include <soc/sdram.h>
+#include <symbols.h>
 
 static const uint64_t dram_size =
 	(uint64_t)min((uint64_t)CONFIG_DRAM_SIZE_MB * MiB, 0xf8000000);
+
+static void init_dvs_outputs(void)
+{
+	uint32_t i;
+
+	write32(&rk3399_grf->iomux_pwm_0, IOMUX_PWM_0);
+	write32(&rk3399_grf->iomux_pwm_1, IOMUX_PWM_1);
+	write32(&rk3399_pmugrf->iomux_pwm_2, IOMUX_PWM_2);
+
+	/* 86% is the desired default setting. */
+	for (i = 0; i < 3; i++)
+		pwm_init(i, 2000, 1720);
+
+}
 
 void main(void)
 {
 	console_init();
 	exception_init();
 
-	/*TODO: need implement sdram init */
+	/* Init DVS to conservative values. */
+	init_dvs_outputs();
+
 	sdram_init(get_sdram_config());
 	mmu_config_range((void *)0, (uintptr_t)dram_size, CACHED_MEM);
 	mmu_config_range(_dma_coherent, _dma_coherent_size, UNCACHED_MEM);
