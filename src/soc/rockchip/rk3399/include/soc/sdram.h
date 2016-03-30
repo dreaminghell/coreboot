@@ -165,9 +165,14 @@ struct rk3399_sdram_params {
 	unsigned char num_channels;
 	unsigned char stride;
 	unsigned char odt;
+	/* align 8 byte */
 	struct rk3399_ddr_pctl_regs pctl_regs;
+	/* align 8 byte */
 	struct rk3399_ddr_pi_regs pi_regs;
+	/* align 8 byte */
 	struct rk3399_ddr_publ_regs phy_regs;
+	/* used for align 8byte for next struct */
+	unsigned int align_8;
 };
 
 #define PI_CA_TRAINING	(1 << 0)
