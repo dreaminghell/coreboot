@@ -19,9 +19,11 @@
 #include <boardid.h>
 #include <boot/coreboot_tables.h>
 #include <console/console.h>
+#include <delay.h>
 #include <device/device.h>
 #include <gpio.h>
 #include <soc/clock.h>
+#include <soc/display.h>
 #include <soc/grf.h>
 
 static void configure_sdmmc(void)
@@ -33,9 +35,23 @@ static void configure_sdmmc(void)
 	write32(&rk3399_grf->iomux_sdmmc, IOMUX_SDMMC);
 }
 
+static void configure_display(void)
+{
+	/* display configure */
+	write32(&rk3399_grf->iomux_edp_hotplug, IOMUX_EDP_HOTPLUG);
+	write32(&rk3399_grf->soc_con25, 1 << 27 | 1 << 11);
+	gpio_output(GPIO(4, D, 3), 1);
+}
+
 static void mainboard_init(device_t dev)
 {
 	configure_sdmmc();
+	configure_display();
+}
+
+void mainboard_power_on_backlight(void)
+{
+	gpio_output(GPIO(1, C, 1), 1);  /* BL_EN */
 }
 
 static void mainboard_enable(device_t dev)
