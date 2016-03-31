@@ -59,6 +59,7 @@
 #define TSADC_BASE		0xff260000
 #define SARADC_BASE		0xff100000
 #define RK_PWM_BASE		0xff420000
+#define EDP_BASE		0xff970000
 
 #define DDRC0_BASE_ADDR		0xffa80000
 #define SERVER_MSCH0_BASE_ADDR	0xffa84000
