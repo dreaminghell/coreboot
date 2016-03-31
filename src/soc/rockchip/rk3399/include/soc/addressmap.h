@@ -58,6 +58,7 @@
 #define SARADC_BASE		0xff100000
 #define PWM_BASE		0xff420000
 #define CRYPTO_BASE		0xff8b0000
+#define EDP_BASE		0xff970000
 #define DDRC0_BASE_ADDR		0xffa80000
 #define	SERVER_MSCH0_BASE_ADDR	0xffa84000
 #define DDRC1_BASE_ADDR		0xffa88000
