@@ -63,6 +63,10 @@ ramstage-y += gpio.c
 ramstage-y += pwm.c
 ramstage-y += saradc.c
 ramstage-y += sdram.c
+ramstage-y += edp.c
+ramstage-y += vop.c
+ramstage-y += display.c
+ramstage-$(CONFIG_EVB_MODE) += rk808.c
 
 BL31_MAKEARGS += PLAT=rk3399
 ################################################################################
