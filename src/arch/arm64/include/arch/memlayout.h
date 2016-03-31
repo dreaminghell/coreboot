@@ -27,9 +27,13 @@
 	_ = ASSERT(size % 4K == 0, \
 		"DMA buffer should be multiple of smallest page size (4K)!");
 
+#define FRAMEBUFFER(addr, size) \
+	REGION(framebuffer, addr, size, 4K) \
+	_ = ASSERT(size % 4K == 0, \
+		"Framebuffer must fit exactly in 4K!");
+
 /* ARM64 stacks need 16-byte alignment. */
 #define STACK(addr, size) \
 	REGION(stack, addr, size, 16) \
 	_ = ASSERT(size >= 2K, "stack should be >= 2K, see toolchain.inc");
-
 #endif /* __ARCH_MEMLAYOUT_H */
