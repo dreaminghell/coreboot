@@ -45,7 +45,7 @@ config MAINBOARD_PART_NUMBER
 
 config DRAM_SIZE_MB
 	int
-	default 2048
+	default 4096
 
 config PMIC_BUS
         int
@@ -59,7 +59,7 @@ config MAINBOARD_PART_NUMBER
 
 config DRAM_SIZE_MB
 	int
-	default 2048
+	default 4096
 endif
 
 config MAINBOARD_VENDOR

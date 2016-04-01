@@ -30,7 +30,8 @@
 #include <soc/sdram.h>
 #include <symbols.h>
 
-static const uint64_t dram_size = (uint64_t)CONFIG_DRAM_SIZE_MB * MiB;
+static const uint64_t dram_size =
+		(uint64_t)min((uint64_t)CONFIG_DRAM_SIZE_MB * MiB, 0xf8000000);
 
 static void init_dvs_outputs(void)
 {
