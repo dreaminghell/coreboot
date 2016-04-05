@@ -547,8 +547,11 @@ static int rk_edp_link_train_ce(struct rk_edp *edp)
 	channel_eq = 0;
 	for (tries = 0; tries < 5; tries++) {
 		rk_edp_set_link_training(edp, edp->train_set);
-		udelay(400);
+		rk_edp_dpcd_write(edp, DPCD_TRAINING_LANE0_SET,
+					edp->train_set,
+					edp->link_train.lane_count);
 
+		udelay(400);
 		if (rk_edp_dpcd_read_link_status(edp, status) < 0) {
 			printk(BIOS_ERR, "displayport link status failed\n");
 			return -1;
