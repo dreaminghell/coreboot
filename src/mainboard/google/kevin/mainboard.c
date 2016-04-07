@@ -23,9 +23,8 @@
 #include <device/device.h>
 #include <gpio.h>
 #include <soc/clock.h>
-#include <soc/display.h>
 #include <soc/grf.h>
-#include <soc/i2c.h>
+#include <soc/display.h>
 
 #if CONFIG_EVB_MODE
 #include <soc/rk808.h>
@@ -58,21 +57,11 @@ static void configure_display(void)
 #endif	
 }
 
-static void configure_codec(void)
-{
-	/* CODEC I2C */
-	write32(&rk3399_pmugrf->iomux_i2c8, IOMUX_I2C8);
-	i2c_init(8, 400*KHz);
-
-	write32(&rk3399_grf->iomux_i2s0, IOMUX_I2S0);
-}
-
 static void mainboard_init(device_t dev)
 {
 	configure_sdmmc();
 	rkclk_configure_emmc();
 	configure_display();
-	configure_codec();
 }
 
 void mainboard_power_on_backlight(void)

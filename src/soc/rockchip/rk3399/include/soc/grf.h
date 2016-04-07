@@ -128,10 +128,7 @@ struct rk3399_grf_regs {
 	u32 gpio3a_iomux;
 	u32 gpio3b_iomux;
 	u32 gpio3c_iomux;
-	union {
-		u32 iomux_i2s0;
-		u32 gpio3d_iomux;
-	};
+	u32 gpio3d_iomux;
 	u32 gpio4a_iomux;
 	union {
 		u32 iomux_sdmmc;
@@ -212,7 +209,6 @@ struct rk3399_pmugrf_regs {
 	union {
 		u32 iomux_pwm_2;
 		u32 iomux_i2c0_scl;
-		u32 iomux_i2c8;
 		u32 gpio1c_iomux;
 	};
 	u32 gpio1d_iomux;
@@ -342,7 +338,6 @@ static struct rk3399_pmusgrf_regs * const rk3399_pmusgrf = (void *)PMUSGRF_BASE;
 					     1 << 4 | 1 << 2 | 1 << 0)
 #define IOMUX_I2C0_SCL	RK_CLRSETBITS(3 << 0, 2 << 0)
 #define IOMUX_I2C0_SDA	RK_CLRSETBITS(3 << 14, 2 << 14)
-#define IOMUX_I2C8	RK_CLRSETBITS(0xf << 8, 1 << 10 | 1 << 8)
 #define IOMUX_PWM_0	RK_SETBITS(1 << 4)
 #define IOMUX_PWM_1	RK_SETBITS(1 << 12)
 #define IOMUX_PWM_2	RK_SETBITS(1 << 6)
@@ -350,7 +345,4 @@ static struct rk3399_pmusgrf_regs * const rk3399_pmusgrf = (void *)PMUSGRF_BASE;
 #define IOMUX_PWM_3_B	RK_SETBITS(1 << 12)
 #define IOMUX_TSADC_INT	RK_CLRSETBITS(3 << 12, 1 << 12)
 #define IOMUX_EDP_HOTPLUG	RK_CLRSETBITS(3 << 14, 2 << 14)
-#define IOMUX_I2S0	RK_CLRSETBITS(0xffff, 1 << 14 | 1 << 12 | 1 << 10 |\
-					      1 << 8 | 1 << 6 | 1 << 4 |\
-					      1 << 2 | 1 << 0)
 #endif	/* __SOC_ROCKCHIP_RK3399_GRF_H__ */
