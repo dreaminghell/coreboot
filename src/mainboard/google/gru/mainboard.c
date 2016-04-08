@@ -24,6 +24,7 @@
 #include <gpio.h>
 #include <soc/clock.h>
 #include <soc/display.h>
+#include <soc/emmc.h>
 #include <soc/grf.h>
 
 static void configure_sdmmc(void)
@@ -46,6 +47,7 @@ static void configure_display(void)
 static void mainboard_init(device_t dev)
 {
 	configure_sdmmc();
+	configure_emmc();
 	configure_display();
 }
 
