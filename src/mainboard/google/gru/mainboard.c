@@ -23,8 +23,9 @@
 #include <device/device.h>
 #include <gpio.h>
 #include <soc/clock.h>
-#include <soc/grf.h>
 #include <soc/display.h>
+#include <soc/emmc.h>
+#include <soc/grf.h>
 
 #if CONFIG_EVB_MODE
 #include <soc/rk808.h>
@@ -46,7 +47,7 @@ static void configure_sdmmc(void)
 	gpio_output(GPIO(4, D, 5), 1);  /* SDMMC_PWR_EN */
 	gpio_output(GPIO(2, A, 2), 1);  /* SDMMC_SDIO_PWR_EN */
 	gpio_input(GPIO(4, D, 2));      /* SDMMC_DET_L */
-	gpio_output(GPIO(2, D, 4), 1);  /* Keep the max voltage */
+	gpio_output(GPIO(2, D, 4), 0);  /* Keep the max voltage */
 #endif
 	write32(&rk3399_grf->iomux_sdmmc, IOMUX_SDMMC);
 }
@@ -67,7 +68,7 @@ static void configure_display(void)
 static void mainboard_init(device_t dev)
 {
 	configure_sdmmc();
-	rkclk_configure_emmc();
+	configure_emmc();
 	configure_usb();
 	configure_display();
 }
