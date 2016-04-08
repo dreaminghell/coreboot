@@ -133,6 +133,20 @@ enum {
 	ACLK_PERIHP_DIV_CON_MASK	= 0x1f,
 	ACLK_PERIHP_DIV_CON_SHIFT	= 0,
 
+	/* CLKSEL_CON21 */
+	ACLK_EMMC_PLL_SEL_MASK          = 1,
+	ACLK_EMMC_PLL_SEL_SHIFT         = 7,
+	ACLK_EMMC_PLL_SEL_GPLL          = 1,
+	ACLK_EMMC_DIV_CON_MASK          = 0x1f,
+	ACLK_EMMC_DIV_CON_SHIFT         = 0,
+
+	/* CLKSEL_CON22 */
+	CLK_EMMC_PLL_MASK               = 7,
+	CLK_EMMC_PLL_SHIFT              = 8,
+	CLK_EMMC_PLL_SEL_GPLL           = 1,
+	CLK_EMMC_DIV_CON_MASK           = 0x7f,
+	CLK_EMMC_DIV_CON_SHIFT          = 0x0,
+
 	/* CLKSEL_CON23 */
 	PCLK_PERILP0_DIV_CON_MASK	= 0x7,
 	PCLK_PERILP0_DIV_CON_SHIFT	= 12,
@@ -672,6 +686,30 @@ uint32_t rkclk_i2c_clock_for_bus(unsigned bus)
 	return freq;
 }
 
+void rkclk_configure_emmc(void)
+{
+        int src_clk_div;
+
+        /* aclk emmc set to 198Mhz, source clock from gpll */
+        src_clk_div = GPLL_HZ / 198000000;
+        assert((src_clk_div - 1 < 31) && (src_clk_div * 198000000 == GPLL_HZ));
+
+        write32(&cru_ptr->clksel_con[21], RK_CLRSETBITS
+		(ACLK_EMMC_PLL_SEL_MASK << ACLK_EMMC_PLL_SEL_SHIFT |
+		 ACLK_EMMC_DIV_CON_MASK << ACLK_EMMC_DIV_CON_SHIFT,
+		 ACLK_EMMC_PLL_SEL_GPLL << ACLK_EMMC_PLL_SEL_SHIFT |
+		 (src_clk_div - 1) << ACLK_EMMC_DIV_CON_SHIFT));
+
+        /* clk emmc set to 198Mhz, source clock from gpll */
+        src_clk_div = GPLL_HZ / 198000000;
+        assert((src_clk_div - 1 < 127) && (src_clk_div * 198000000 == GPLL_HZ));
+
+        write32(&cru_ptr->clksel_con[22], RK_CLRSETBITS
+		(CLK_EMMC_PLL_MASK << CLK_EMMC_PLL_SHIFT |
+		 CLK_EMMC_DIV_CON_MASK << CLK_EMMC_DIV_CON_SHIFT,
+		 CLK_EMMC_PLL_SEL_GPLL << CLK_EMMC_PLL_SHIFT |
+		 (src_clk_div - 1) << CLK_EMMC_DIV_CON_SHIFT));
+}
 void rkclk_configure_saradc(unsigned int hz)
 {
 	int src_clk_div;
