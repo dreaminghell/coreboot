@@ -26,6 +26,7 @@ bootblock-y += clock.c
 bootblock-y += timer.c
 
 verstage-y += ../common/cbmem.c
+verstage-y += sdram.c
 verstage-y += ../common/spi.c
 verstage-$(CONFIG_DRIVERS_UART) += ../common/uart.c
 verstage-y += clock.c
@@ -34,6 +35,7 @@ verstage-y += timer.c
 ################################################################################
 
 romstage-y += ../common/cbmem.c
+romstage-y += sdram.c
 romstage-y += ../common/spi.c
 romstage-$(CONFIG_DRIVERS_UART) += ../common/uart.c
 romstage-y += clock.c
@@ -42,6 +44,7 @@ romstage-y += timer.c
 ################################################################################
 
 ramstage-y += ../common/cbmem.c
+ramstage-y += sdram.c
 ramstage-y += ../common/spi.c
 ramstage-$(CONFIG_DRIVERS_UART) += ../common/uart.c
 ramstage-y += clock.c
