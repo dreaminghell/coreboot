@@ -18,6 +18,7 @@
 #include <assert.h>
 #include <bootblock_common.h>
 #include <soc/grf.h>
+#include <soc/spi.h>
 #include <console/console.h>
 
 void bootblock_mainboard_early_init(void)
@@ -33,4 +34,7 @@ void bootblock_mainboard_early_init(void)
 
 void bootblock_mainboard_init(void)
 {
+	write32(&rk3399_pmugrf->spi1_rxd, IOMUX_SPI1_RX);
+	write32(&rk3399_pmugrf->spi1_csclktx, IOMUX_SPI1_CSCLKTX);
+	rockchip_spi_init(CONFIG_BOOT_MEDIA_SPI_BUS, 24750*KHz);
 }
