@@ -108,6 +108,9 @@ void tsadc_init(void)
 			1 << START_SHIFT);
 	udelay(20);
 
+	/* set the tshut polarity */
+	write32(&rk3399_tsadc->auto_con, TSHUT_POL_HIGH);
+
 	/* start auto_con */
 	write32(&rk3399_tsadc->auto_period, AUTO_PERIOD);
 	write32(&rk3399_tsadc->hight_int_debounce, AUTO_DEBOUNCE);
