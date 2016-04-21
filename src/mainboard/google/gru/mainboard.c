@@ -52,9 +52,18 @@ static void configure_sdmmc(void)
 	write32(&rk3399_grf->iomux_sdmmc, IOMUX_SDMMC);
 }
 
+/* display configure */
 static void configure_display(void)
 {
-	/* display configure */
+	/*
+	 * once hpd pin in high status, we judge the panel connect,
+	 * but the gpio4c7 default to pull up(about 33k~89k), we
+	 * have external pull down resistance(100k) on hpd pin,
+	 * so the voltage will be 1.9V even we do not connect the
+	 * panel, set gpio4c7 to pull none here, let the hpd in low status
+	 * when panel disconnect
+	 */
+	gpio_input(GPIO(4, C, 7));
 	write32(&rk3399_grf->iomux_edp_hotplug, IOMUX_EDP_HOTPLUG);
 	write32(&rk3399_grf->soc_con25, 1 << 27 | 1 << 11);
 
