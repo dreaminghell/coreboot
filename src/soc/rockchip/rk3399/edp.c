@@ -947,8 +947,8 @@ static int rockchip_edp_get_plug_in_status(struct rk_edp *edp)
 /*
  * support edp HPD function
  * some hardware version do not support edp hdp,
- * we use 200ms to try to get the hpd single now,
- * if we can not get edp hpd single, it will delay 200ms,
+ * we use 360ms to try to get the hpd single now,
+ * if we can not get edp hpd single, it will delay 360ms,
  * also meet the edp power timing request, to compatible
  * all of the hardware version
  */
@@ -956,7 +956,7 @@ static void rockchip_edp_wait_hpd(struct rk_edp *edp)
 {
 	struct stopwatch hpd;
 
-	stopwatch_init_msecs_expire(&hpd, 200);
+	stopwatch_init_msecs_expire(&hpd, 360);
 	do {
 		if (rockchip_edp_get_plug_in_status(edp))
 			return;
