@@ -31,8 +31,20 @@ static void configure_sdmmc(void)
 {
 	gpio_output(GPIO(4, D, 5), 1);  /* SDMMC_PWR_EN */
 	gpio_output(GPIO(2, A, 2), 1);  /* SDMMC_SDIO_PWR_EN */
-	gpio_input(GPIO(4, D, 2));      /* SDMMC_DET_L */
+	/*
+	 * SDMMC_DET_L is different on different board revisions. This should
+	 * be described better.
+	 */
+	switch (board_id()) {
+	default:
+		gpio_input(GPIO(4, D, 2));
+		break;
+	case 1:
+		gpio_input(GPIO(4, D, 0));
+		break;
+	}
 	gpio_output(GPIO(2, D, 4), 0);  /* Keep the max voltage */
+
 	write32(&rk3399_grf->iomux_sdmmc, IOMUX_SDMMC);
 }
 
