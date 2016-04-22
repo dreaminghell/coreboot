@@ -24,7 +24,6 @@
 #include <gpio.h>
 #include <soc/clock.h>
 #include <soc/display.h>
-#include <soc/emmc.h>
 #include <soc/grf.h>
 
 #if CONFIG_EVB_MODE
@@ -50,6 +49,17 @@ static void configure_sdmmc(void)
 	gpio_output(GPIO(2, D, 4), 0);  /* Keep the max voltage */
 #endif
 	write32(&rk3399_grf->iomux_sdmmc, IOMUX_SDMMC);
+}
+
+static void configure_emmc(void)
+{
+	/*
+	 * host controller does not support programmable clock generator
+	 * refer to TRM V0.3 Part 1 Chapter 15 PAGE 782 for this register
+	 */
+	rk_clrsetreg(&rk3399_grf->emmccore_con[11], 0xff << 0, 0 << 0);
+
+	rkclk_configure_emmc();
 }
 
 /* display configure */
