@@ -60,7 +60,6 @@ ramstage-$(CONFIG_DRIVERS_UART) += ../common/uart.c
 ramstage-y += clock.c
 ramstage-y += display.c
 ramstage-y += edp.c
-ramstage-y += emmc.c
 ramstage-y += gpio.c
 ramstage-y += ../common/i2c.c
 ramstage-y += ../common/pwm.c
