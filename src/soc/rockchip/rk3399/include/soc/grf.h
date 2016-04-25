@@ -257,7 +257,10 @@ struct rk3399_pmugrf_regs {
 	u32 gpio1l_he;
 	u32 gpio1h_he;
 	u32 reserved15[4];
-	u32 soc_con0;
+	union {
+		u32 pwm3_sel;
+		u32 soc_con0;
+	};
 	u32 reserved16[9];
 	u32 soc_con10;
 	u32 soc_con11;
