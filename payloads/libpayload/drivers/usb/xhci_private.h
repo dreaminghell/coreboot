@@ -468,6 +468,9 @@ typedef struct xhci {
 	/* R/W, volatile, MMIO -> no bitfields */
 	volatile u32 *dbreg;
 
+	volatile u32 *gctl;		/* dwc3 gctl */
+	volatile u32 *gusb2phycfg;	/* dwc3 gusb2phycfg */
+
 	/* R/W, volatile, Memory -> bitfields allowed */
 	u64 *dcbaa;	/* pointers to sp_ptrs and output (device) contexts */
 	u64 *sp_ptrs;	/* pointers to scratchpad buffers */

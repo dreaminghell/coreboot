@@ -189,6 +189,8 @@ xhci_init (unsigned long physical_bar)
 	xhci->opreg	= ((void *)xhci->capreg) + xhci->capreg->caplength;
 	xhci->hcrreg	= ((void *)xhci->capreg) + xhci->capreg->rtsoff;
 	xhci->dbreg	= ((void *)xhci->capreg) + xhci->capreg->dboff;
+	xhci->gctl	= ((void *)xhci->capreg) + 0xc110;
+	xhci->gusb2phycfg	= ((void *)xhci->capreg) + 0xc200;
 	xhci_debug("regbase: 0x%"PRIx32"\n", physical_bar);
 	xhci_debug("caplen:  0x%"PRIx32"\n", xhci->capreg->caplength);
 	xhci_debug("rtsoff:  0x%"PRIx32"\n", xhci->capreg->rtsoff);
@@ -197,10 +199,14 @@ xhci_init (unsigned long physical_bar)
 	xhci_debug("hciversion: %"PRIx8".%"PRIx8"\n",
 		   xhci->capreg->hciver_hi, xhci->capreg->hciver_lo);
 	if ((xhci->capreg->hciversion < 0x96) ||
-			(xhci->capreg->hciversion > 0x100)) {
+			(xhci->capreg->hciversion > 0x110)) {
 		xhci_debug("Unsupported xHCI version\n");
 		goto _free_xhci;
 	}
+
+	*(xhci->gctl) = 0x30c11004;
+	*(xhci->gusb2phycfg) = 0x40101408;
+	wmb();
 
 	xhci_debug("context size: %dB\n", CTXSIZE(xhci));
 	xhci_debug("maxslots: 0x%02lx\n", xhci->capreg->MaxSlots);
@@ -745,6 +751,7 @@ xhci_bulk(endpoint_t *const ep, const int size, u8 *const src,
 	const unsigned mps = EC_GET(MPS, epctx);
 	const unsigned dir = (ep->direction == OUT) ? TRB_DIR_OUT : TRB_DIR_IN;
 	xhci_enqueue_td(tr, ep_id, mps, size, data, dir);
+	udelay(10);
 	xhci->dbreg[ep->dev->address] = ep_id;
 
 	/* Wait for transfer event */
