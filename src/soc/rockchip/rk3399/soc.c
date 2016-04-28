@@ -35,7 +35,7 @@ static void soc_init(device_t dev)
 	/* reserve bl31 image, which define in
 	 * arm-trusted-firmware/plat/rockchip/rk3399/include/platform_def.h
 	 */
-	mmio_resource(dev, 1, (0x500000 / KiB), (0x80000 / KiB));
+	mmio_resource(dev, 1, (0x10000 / KiB), (0x80000 / KiB));
 
 	if (display_init_required())
 		rk_display_init(dev, (uintptr_t)_framebuffer,
