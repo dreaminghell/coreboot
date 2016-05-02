@@ -25,6 +25,7 @@
 #include <gpio.h>
 #include <soc/clock.h>
 #include <soc/display.h>
+#include <soc/emmc.h>
 #include <soc/grf.h>
 #include <soc/i2c.h>
 
@@ -40,6 +41,8 @@ static void configure_emmc(void)
 	write32(&rk3399_grf->emmccore_con[11], RK_CLRSETBITS(0xff, 0));
 
 	rkclk_configure_emmc();
+
+	enable_emmc_clk();
 }
 
 static void configure_sdmmc(void)
