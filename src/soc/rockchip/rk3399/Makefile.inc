@@ -50,7 +50,7 @@ romstage-y += tsadc.c
 romstage-y += usb.c
 romstage-y += gpio.c
 romstage-y += ../common/gpio.c
-
+romstage-y += saradc.c
 ################################################################################
 
 ramstage-y += ../common/cbmem.c
@@ -64,12 +64,11 @@ ramstage-y += emmc.c
 ramstage-y += ../common/gpio.c
 ramstage-y += gpio.c
 ramstage-y += ../common/i2c.c
-ramstage-y += saradc.c
 ramstage-y += soc.c
 ramstage-y += timer.c
 ramstage-y += ../common/vop.c
 ramstage-y += usb.c
-
+ramstage-y += saradc.c
 ramstage-y += bl31_plat_params.c
 BL31_MAKEARGS += PLAT=rk3399
 ################################################################################

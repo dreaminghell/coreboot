@@ -26,6 +26,7 @@
 
 static struct rk3399_sdram_params sdram_configs[] = {
 	#include "sdram_inf/sdram-lpddr3-hynix-4GB.inc"
+	#include "sdram_inf/sdram-lpddr3-k4e6e304ee.inc"
 };
 
 const struct rk3399_sdram_params *get_sdram_config()
