@@ -45,6 +45,7 @@ romstage-y += clock.c
 romstage-y += mmu_operations.c
 romstage-y += ../common/pwm.c
 romstage-y += timer.c
+romstage-y += tsadc.c
 
 ################################################################################
 
