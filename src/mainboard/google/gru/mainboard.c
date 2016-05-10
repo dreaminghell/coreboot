@@ -28,6 +28,9 @@
 #include <soc/emmc.h>
 #include <soc/grf.h>
 #include <soc/i2c.h>
+#include <soc/spi.h>
+
+#include <drivers/spi/tpm/tpm.h>
 
 static void configure_emmc(void)
 {
@@ -82,6 +85,12 @@ static void mainboard_init(device_t dev)
 	configure_emmc();
 
 	configure_display();
+
+	/* select the pinmux for cr50, note that it is not very fast... */
+	write32(&rk3399_grf->iomux_spi0, IOMUX_SPI0);
+	rockchip_spi_init(0, 1500*KHz);
+	if (!tpm2_init(spi_setup_slave(0, 0)))
+		printk(BIOS_INFO, "spi interface to cr50 is up\n");
 }
 
 static void enable_backlight_booster(void)

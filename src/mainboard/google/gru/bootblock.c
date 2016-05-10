@@ -61,8 +61,4 @@ void bootblock_mainboard_init(void)
 	write32(&rk3399_pmugrf->spi1_rxd, IOMUX_SPI1_RX);
 	write32(&rk3399_pmugrf->spi1_csclktx, IOMUX_SPI1_CSCLKTX);
 	rockchip_spi_init(CONFIG_BOOT_MEDIA_SPI_BUS, 24750*KHz);
-
-	/* select the pinmux for cr50, note that it is not very fast... */
-	write32(&rk3399_grf->iomux_spi0, IOMUX_SPI0);
-	rockchip_spi_init(CONFIG_DRIVER_TPM_SPI_BUS, 1500*KHz);
 }
