@@ -31,6 +31,7 @@
 #include <soc/spi.h>
 
 #include <drivers/spi/tpm/tpm.h>
+#include <ec/google/chromeec/ec.h>
 
 static void configure_emmc(void)
 {
@@ -79,6 +80,26 @@ static void configure_display(void)
 	gpio_output(GPIO(4, D, 3), 1); /* CPU3_EDP_VDDEN for P3.3V_DISP */
 }
 
+
+static int chromeec_hello(void)
+{
+	struct chromeec_command cec_cmd;
+	struct ec_params_hello cmd_hello;
+	struct ec_response_hello rsp_hello;
+	cmd_hello.in_data = 0x10203040;
+	cec_cmd.cmd_code = EC_CMD_HELLO;
+	cec_cmd.cmd_version = 0;
+	cec_cmd.cmd_data_in = &cmd_hello.in_data;
+	cec_cmd.cmd_data_out = &rsp_hello.out_data;
+	cec_cmd.cmd_size_in = sizeof(cmd_hello.in_data);
+	cec_cmd.cmd_size_out = sizeof(rsp_hello.out_data);
+	cec_cmd.cmd_dev_index = 0;
+	google_chromeec_command(&cec_cmd);
+	printk(BIOS_DEBUG, "Google Chrome EC: Hello got back %x status (%x)\n",
+	       rsp_hello.out_data, cec_cmd.cmd_code);
+	return cec_cmd.cmd_code;
+}
+
 static void mainboard_init(device_t dev)
 {
 	configure_sdmmc();
@@ -91,6 +112,11 @@ static void mainboard_init(device_t dev)
 	rockchip_spi_init(0, 1500*KHz);
 	if (!tpm2_init(spi_setup_slave(0, 0)))
 		printk(BIOS_INFO, "spi interface to cr50 is up\n");
+
+	rockchip_spi_init(5, 8250*KHz);
+	write32(&rk3399_grf->iomux_spi5, IOMUX_SPI5);
+	if (!chromeec_hello())
+		printk(BIOS_INFO, "spi interface to ec is up\n");
 }
 
 static void enable_backlight_booster(void)
