@@ -51,7 +51,7 @@
 			}
 		}
 	},
-	.ddr_freq = 300*MHz,
+	.ddr_freq = 666*MHz,
 	.dramtype = LPDDR3,
 	.num_channels = 2,
 	.stride = 13,
@@ -275,7 +275,7 @@
 			0x04030001,	/* DENALI_CTL_214_DATA */
 			0x08080803,	/* DENALI_CTL_215_DATA */
 			0x02080808,	/* DENALI_CTL_216_DATA */
-			0x02010203,	/* DENALI_CTL_217_DATA */
+			0x02050203,	/* DENALI_CTL_217_DATA */
 			0x02010303,	/* DENALI_CTL_218_DATA */
 			0x00010203,	/* DENALI_CTL_219_DATA */
 			0x00020202,	/* DENALI_CTL_220_DATA */
