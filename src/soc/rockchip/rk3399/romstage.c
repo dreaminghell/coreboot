@@ -14,6 +14,7 @@
  *
  */
 
+#include <assert.h>
 #include <arch/cache.h>
 #include <arch/cpu.h>
 #include <arch/exception.h>
@@ -34,70 +35,51 @@
 #include <soc/usb.h>
 
 static const uint64_t dram_size =
-	(uint64_t)min((uint64_t)CONFIG_DRAM_SIZE_MB * MiB, MAX_DRAM_ADDRESS);
+		(uint64_t)min((uint64_t)CONFIG_DRAM_SIZE_MB * MiB, 0xf8000000);
 
-static void init_dvs_outputs(void)
+static void regulate_vdd_centre(unsigned int mv)
 {
-	uint32_t i;
+	unsigned int duty_ns;
+	const u32 period_ns = 2000;	/* pwm period: 2000ns */
+	const u32 max_regulator_mv = 1350;	/* 1.35V */
+	const u32 min_regulator_mv = 870;	/* 0.87V */
 
-	write32(&rk3399_grf->iomux_pwm_0, IOMUX_PWM_0);		/* GPU */
-	write32(&rk3399_grf->iomux_pwm_1, IOMUX_PWM_1);		/* Big */
-	write32(&rk3399_pmugrf->iomux_pwm_2, IOMUX_PWM_2);	/* Little */
-	write32(&rk3399_pmugrf->iomux_pwm_3a, IOMUX_PWM_3_A);	/* Centerlog */
+	write32(&rk3399_pmugrf->iomux_pwm_3a, IOMUX_PWM_3_A);
+	write32(&rk3399_pmugrf->pwm3_sel, PWM3_SEL_A);
+	assert((mv >= min_regulator_mv) && (mv <= max_regulator_mv));
 
-	/*
-	 * Notes:
-	 *
-	 * design_min = 0.8
-	 * design_max = 1.5
-	 *
-	 * period = 3333     # 300 kHz
-	 * volt = 1.1
-	 *
-	 * # Intentionally round down (higher volt) to be safe.
-	 * int((period / (design_max - design_min)) * (design_max - volt))
-	 *
-	 * Tested on kevin rev0 board 82 w/ all 4 PWMs:
-	 *
-	 *   period = 3333, volt = 1.1: 1904 -- Worked for me!
-	 *   period = 3333, volt = 1.0: 2380 -- Bad
-	 *   period = 3333, volt = 0.9: 2856 -- Bad
-	 *
-	 *   period = 25000, volt = 1.1: 14285 -- Bad
-	 *   period = 25000, volt = 1.0: 17857 -- Bad
-	 *
-	 * TODO: Almost certainly we don't need all 4 PWMs set to the same
-	 * thing.  We should experiment
-	 */
-	for (i = 0; i < 4; i++)
-		pwm_init(i, 3333, 1904);
+	duty_ns = (max_regulator_mv - mv) * period_ns /
+			(max_regulator_mv - min_regulator_mv);
+
+	pwm_init(3, period_ns, duty_ns);
 }
 
-static void prepare_usb(void)
+static void regulate_vdd_log(unsigned int mv)
 {
-	/*
-	 * Do dwc3 core soft reset and phy reset. Kick these resets
-	 * off early so they get at least 100ms to settle.
-	 */
-	reset_usb_drd0_dwc3();
-	reset_usb_drd1_dwc3();
+	unsigned int duty_ns;
+	const u32 period_ns = 2000;	/* pwm period: 2000ns */
+	const u32 max_regulator_mv = 1400;	/* 1.4V */
+	const u32 min_regulator_mv = 800;	/* 0.8V */
+
+	write32(&rk3399_pmugrf->iomux_pwm_2, IOMUX_PWM_2);
+	assert((mv >= min_regulator_mv) && (mv <= max_regulator_mv));
+
+	duty_ns = (max_regulator_mv - mv) * period_ns /
+			(max_regulator_mv - min_regulator_mv);
+
+	pwm_init(2, period_ns, duty_ns);
 }
 
 void main(void)
 {
 	console_init();
-	tsadc_init(TSHUT_POL_HIGH);
 	exception_init();
-
-	/* Init DVS to conservative values. */
-	init_dvs_outputs();
-
-	prepare_usb();
-
+	regulate_vdd_log(950);
+	regulate_vdd_centre(950);
 	sdram_init(get_sdram_config());
-
 	mmu_config_range((void *)0, (uintptr_t)dram_size, CACHED_MEM);
 	mmu_config_range(_dma_coherent, _dma_coherent_size, UNCACHED_MEM);
+
 	cbmem_initialize_empty();
 	run_ramstage();
 }
